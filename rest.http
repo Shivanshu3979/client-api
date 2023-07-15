@@ -1,0 +1,19 @@
+POST http://localhost:3001/v1/user
+Content-Type: application/json
+
+{
+    "name":"abc",
+    "username":"test-user-3",
+    "password":"test_pass",
+    "role":"super-admin"
+}
+
+###login
+
+POST http://localhost:3001/v1/user/login
+Content-Type: application/json
+
+{
+    "username":"test-user-3",
+    "password":"test_pass"
+}
