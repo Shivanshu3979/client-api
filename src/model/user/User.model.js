@@ -20,6 +20,18 @@ const getUserByEmail = (username) =>{
         }
     })
 }
+const getUserById = (_id) =>{
+    return new Promise(async (resolve,reject)=>{
+        if(!_id) return false
+        try {
+            UserSchema.findOne({_id}).then((data)=>{
+                resolve(data);
+            })
+        } catch (error) {
+           console.error(error);
+        }
+    })
+}
 
 const storeUserRefreshJWT=(_id,token)=>{
     return new Promise((resolve,reject)=>{
@@ -39,5 +51,6 @@ const storeUserRefreshJWT=(_id,token)=>{
 module.exports={
     insertUser,
     getUserByEmail,
+    getUserById,
     storeUserRefreshJWT
 };

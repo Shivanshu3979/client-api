@@ -33,7 +33,19 @@ const createRefreshJWT=async (payLoad,_id)=>{
     
 }
 
+const verifyAccessJWT=userJWt=>{
+    try{
+        return Promise.resolve(
+            jwt.verify(userJWt,process.env.JWT_ACCESS_SECRET)
+        )
+        
+    }catch(error){
+        return Promise.resolve(error);
+    }
+}
+
 module.exports={
     createAccessJWT,
     createRefreshJWT,
+    verifyAccessJWT,
 }

@@ -4,8 +4,9 @@ const router=express.Router();
 const bcrypt=require('bcrypt');
 const saltRounds=10;
 
-const {insertUser, getUserByEmail}=require("../model/user/User.model");
+const {insertUser, getUserByEmail, getUserById}=require("../model/user/User.model");
 const {createAccessJWT,createRefreshJWT}=require("../jwt.helper");
+const { userAuthorization } = require("../middlewares/authorization.middleware");
 
 router.all('/',(req,res,next)=>{
     //res.json({message:"return form user router"});
@@ -73,4 +74,11 @@ router.post("/login",async(req,res)=>{
         refreshJWT});
     
    })
+
+router.get("/", userAuthorization,async(req,res)=>{
+    const _id=req.userID;
+    const profile=await getUserById(_id);
+    res.json({profile});
+})
+
 module.exports=router;

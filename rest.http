@@ -17,3 +17,7 @@ Content-Type: application/json
     "username":"test-user-3",
     "password":"test_pass"
 }
+
+###authorization
+GET http://localhost:3001/v1/user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0zIiwiaWF0IjoxNjg5NTM5MTY2LCJleHAiOjE2ODk1NDAwNjZ9.exVXqE_xgf63MbFrfshD9rvPnvThkn0C3-Mu-c_7k8A
