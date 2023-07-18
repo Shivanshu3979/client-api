@@ -3,6 +3,7 @@ Content-Type: application/json
 
 {
     "name":"abc",
+    "email":"abc@123",
     "username":"test-user-3",
     "password":"test_pass",
     "role":"super-admin"
@@ -20,4 +21,24 @@ Content-Type: application/json
 
 ###authorization
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0zIiwiaWF0IjoxNjg5NTM5MTY2LCJleHAiOjE2ODk1NDAwNjZ9.exVXqE_xgf63MbFrfshD9rvPnvThkn0C3-Mu-c_7k8A
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0zIiwiaWF0IjoxNjg5NTgzNjA3LCJleHAiOjE2ODk1ODQ1MDd9.QsntGvFIA4Koz6UKFAUtkEWNNF7XtcfVecp8rwBmasU
+
+###password-resett
+POST http://localhost:3001/v1/user/reset-password
+Content-Type: application/json
+
+{
+    "username":"test-user-3"
+}
+
+
+###update password end-point
+PATCH http://localhost:3001/v1/user/reset-password
+Content-Type: application/json
+
+{
+    "username":"test-user-3",
+    "pin":"896321",
+    "newPassword":"password"
+}
+
