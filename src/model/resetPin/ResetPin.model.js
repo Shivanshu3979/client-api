@@ -8,6 +8,39 @@ const genNumber=()=>{
     }
     return pin;
 }
+
+const getPinByEmailPin = (email, pin) => {
+    return new Promise((resolve, reject) => {
+      try {
+        ResetPinSchema.findOne({ email, pin })
+          .exec()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            console.log(error);
+            resolve(false);
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+  
+const deletePinByEmailPin = (email, pin) => {
+
+      try {
+        ResetPinSchema.findOneAndDelete({ email, pin })
+          .exec()
+          .then((data) => {})
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+  };
+
 const setPasswordResetPin=(email)=>{
     
     const Rpin=genNumber();
@@ -28,4 +61,6 @@ const setPasswordResetPin=(email)=>{
 
 module.exports={
     setPasswordResetPin,
+    getPinByEmailPin,
+    deletePinByEmailPin,
 };

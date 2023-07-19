@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "username":"test-user-3",
-    "password":"test_pass"
+    "password":"password1"
 }
 
 ###authorization
@@ -38,7 +38,7 @@ Content-Type: application/json
 
 {
     "username":"test-user-3",
-    "pin":"896321",
-    "newPassword":"password"
+    "pin":"890946",
+    "newPassword":"password1"
 }
 

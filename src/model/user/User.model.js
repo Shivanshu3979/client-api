@@ -49,9 +49,27 @@ const storeUserRefreshJWT=(_id,token)=>{
         }
     })
 }
+
+const updatePassword=(_id,password)=>{
+    return new Promise((resolve,reject)=>{
+        try {
+            UserSchema.findByIdAndUpdate(
+                {_id},
+                {$set:{"password":password}},
+                {new:true}).then(data=>resolve(data))
+                .catch(error=>{reject(error)})
+        } catch (error) {
+            console.log(error)
+            reject(error);
+        }
+    })
+}
+
+
 module.exports={
     insertUser,
     getUserByEmail,
     getUserById,
-    storeUserRefreshJWT
+    storeUserRefreshJWT,
+    updatePassword,
 };
