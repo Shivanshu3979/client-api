@@ -16,13 +16,12 @@ Content-Type: application/json
 
 {
     "username":"test-user-2",
-    "password":"test_pass"
+    "password":"password1"
 }
 
 ###authorization
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0yIiwiaWF0IjoxNjg5ODQxMDA0LCJleHAiOjE2ODk4NDE5MDR9.ICmb61EItMo1ubBglSd48mHgS8kSioD_xsi29IFIZF0
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0yIiwiaWF0IjoxNjg5ODYyODc5LCJleHAiOjE2ODk4NjM3Nzl9.mCcrwnec2MW9b42RrbpnqiTt6bomHxH1pn6N2qQrS5g
 ###password-resett
 POST http://localhost:3001/v1/user/reset-password
 Content-Type: application/json
@@ -42,3 +41,6 @@ Content-Type: application/json
     "newPassword":"password1"
 }
 
+###logout endpoint
+DELETE http://localhost:3001/v1/user/logout
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0yIiwiaWF0IjoxNjg5ODY0MDkwLCJleHAiOjE2ODk4NjU4OTB9.DLPBEn0oQE-6nQPUDP4WuK9UNC2o3T0BVb4Fni3SyaU

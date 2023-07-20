@@ -4,12 +4,13 @@ const router=express.Router();
 const bcrypt=require('bcrypt');
 const saltRounds=10;
 
-const {insertUser, getUserByEmail, getUserById, updatePassword}=require("../model/user/User.model");
+const {insertUser, getUserByEmail, getUserById, updatePassword, storeUserRefreshJWT}=require("../model/user/User.model");
 const {createAccessJWT,createRefreshJWT}=require("../jwt.helper");
 const { userAuthorization } = require("../middlewares/authorization.middleware");
 const { setPasswordResetPin, getPinByEmailPin, deletePinByEmailPin } = require("../model/resetPin/ResetPin.model");
 const { emailProcessor } = require("../email.helper");
 const { resetPassValidation, updatePassValidation } = require("../middlewares/formValidation.middleware");
+const { deleteJWT } = require("../redis.helper");
 
 router.all('/',(req,res,next)=>{
     //res.json({message:"return form user router"});
@@ -56,7 +57,7 @@ router.post("/login",async(req,res)=>{
     if(!username || !password){
         res.json({status:"error", message:"Invalid Form Data"});
     }
-    const user=await getUserByEmail(username);
+    const user=await getUserByEmail("",username);
     const dat_pass=user && user._id ? user.password:null;
     if(!dat_pass){
         return res.json({status:"error", message:"Invalid Username or password"});
@@ -90,7 +91,7 @@ router.post('/reset-password', resetPassValidation, async(req,res)=>{
     if(!email){
         return res.json({message:"Invalid email", access:"forbidden"})
     }
-    const user=await getUserByEmail(email);
+    const user=await getUserByEmail(email,"");
     console.log(user.email)
     if(user && user._id && user.email){
         //6 digit pin 
@@ -115,7 +116,7 @@ router.post('/reset-password', resetPassValidation, async(req,res)=>{
 
 router.patch('/reset-password', updatePassValidation,async(req,res)=>{
     const {email, pin, newPassword} = req.body
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmail(email,"");
     const getPin = await getPinByEmailPin(user.email,pin);
 
     if(getPin._id){
@@ -148,4 +149,22 @@ router.patch('/reset-password', updatePassValidation,async(req,res)=>{
 
 })
 
- module.exports=router;
+router.delete("/logout", userAuthorization, async(req,res)=>{
+    const {authorization} = req.headers;
+    const _id=req.userID;
+
+    deleteJWT(authorization);
+    const result=await storeUserRefreshJWT(_id,"");
+
+    if(result._id){
+        return res.json({
+            status:"success",
+            message:"logged out successfully"
+        });
+    }
+    res.json({
+        status:"success",
+        message:"Unable to logout user."
+    })
+})
+module.exports=router;
