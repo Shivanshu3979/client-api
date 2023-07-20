@@ -32,7 +32,6 @@ const deletePinByEmailPin = (email, pin) => {
       try {
         ResetPinSchema.findOneAndDelete({ email, pin })
           .exec()
-          .then((data) => {})
           .catch((error) => {
             console.log(error);
           });
@@ -49,7 +48,7 @@ const setPasswordResetPin=(email)=>{
         email,
         pin:Rpin
     }
-    console.log(resetObj)
+    
     return new Promise((resolve,reject)=>{
         ResetPinSchema(resetObj)
         .save()

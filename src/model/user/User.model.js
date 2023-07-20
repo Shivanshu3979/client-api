@@ -9,11 +9,12 @@ const insertUser=(userObj)=>{
         });
     }
     
-const getUserByEmail = (username) =>{
+const getUserByEmail = (email) =>{
     return new Promise(async (resolve,reject)=>{
-        if(!username) return false
+        console.log(email)
+        if(!email) return false
         try {
-            UserSchema.findOne({username}).then((data)=>{
+            UserSchema.findOne({email}).then((data)=>{
                 resolve(data);
             })
         } catch (error) {

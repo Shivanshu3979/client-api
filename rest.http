@@ -3,8 +3,8 @@ Content-Type: application/json
 
 {
     "name":"abc",
-    "email":"abc@123",
-    "username":"test-user-3",
+    "email":"abc@epitometrc.com",
+    "username":"test-user-2",
     "password":"test_pass",
     "role":"super-admin"
 }
@@ -15,20 +15,20 @@ POST http://localhost:3001/v1/user/login
 Content-Type: application/json
 
 {
-    "username":"test-user-3",
-    "password":"password1"
+    "username":"test-user-2",
+    "password":"test_pass"
 }
 
 ###authorization
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0zIiwiaWF0IjoxNjg5NTgzNjA3LCJleHAiOjE2ODk1ODQ1MDd9.QsntGvFIA4Koz6UKFAUtkEWNNF7XtcfVecp8rwBmasU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0yIiwiaWF0IjoxNjg5ODQxMDA0LCJleHAiOjE2ODk4NDE5MDR9.ICmb61EItMo1ubBglSd48mHgS8kSioD_xsi29IFIZF0
 
 ###password-resett
 POST http://localhost:3001/v1/user/reset-password
 Content-Type: application/json
 
 {
-    "username":"test-user-3"
+    "email":"abc@epitometrc.com"
 }
 
 
@@ -37,8 +37,8 @@ PATCH http://localhost:3001/v1/user/reset-password
 Content-Type: application/json
 
 {
-    "username":"test-user-3",
-    "pin":"890946",
+    "email":"abc@epitometrc.com",
+    "pin":"448056",
     "newPassword":"password1"
 }
 

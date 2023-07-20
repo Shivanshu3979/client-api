@@ -9,6 +9,7 @@ const {createAccessJWT,createRefreshJWT}=require("../jwt.helper");
 const { userAuthorization } = require("../middlewares/authorization.middleware");
 const { setPasswordResetPin, getPinByEmailPin, deletePinByEmailPin } = require("../model/resetPin/ResetPin.model");
 const { emailProcessor } = require("../email.helper");
+const { resetPassValidation, updatePassValidation } = require("../middlewares/formValidation.middleware");
 
 router.all('/',(req,res,next)=>{
     //res.json({message:"return form user router"});
@@ -84,17 +85,17 @@ router.get("/", userAuthorization,async(req,res)=>{
     res.json({profile});
 })
 
-router.post('/reset-password', async(req,res)=>{
-    const{username}=req.body;
-    if(!username){
-        return res.json({message:"Invalid username", access:"forbidden"})
+router.post('/reset-password', resetPassValidation, async(req,res)=>{
+    const{email}=req.body;
+    if(!email){
+        return res.json({message:"Invalid email", access:"forbidden"})
     }
-    const user=await getUserByEmail(username);
+    const user=await getUserByEmail(email);
     console.log(user.email)
     if(user && user._id && user.email){
         //6 digit pin 
         const setPin=await setPasswordResetPin(user.email)
-        const result = await emailProcessor(user.email,setPin.pin,"request-new-pass");
+        const result = await emailProcessor(user.email,user.username,setPin.pin,"request-new-pass");
 
         if(result.messageId){
             return res.json({
@@ -112,9 +113,9 @@ router.post('/reset-password', async(req,res)=>{
     res.json({status:"error", message:"if the email is associated with your username the password reset pin will sent shortly"});
 })
 
-router.patch('/reset-password', async(req,res)=>{
-    const {username, pin, newPassword} = req.body
-    const user = await getUserByEmail(username);
+router.patch('/reset-password', updatePassValidation,async(req,res)=>{
+    const {email, pin, newPassword} = req.body
+    const user = await getUserByEmail(email);
     const getPin = await getPinByEmailPin(user.email,pin);
 
     if(getPin._id){
@@ -130,10 +131,10 @@ router.patch('/reset-password', async(req,res)=>{
 
         const hash = await hashPassword(newPassword);
         const result = await updatePassword(user._id,hash);
-        const mail_result = await emailProcessor(user.email,pin,"password-update-success");
-        
+        const mail_result = await emailProcessor(user.email,user.username,pin,"password-update-success");
+        console.log(mail_result);
         if(result._id && mail_result.messageId){
-            await deletePinByEmailPin(user.email,pin);
+            deletePinByEmailPin(user.email,pin);
             return res.json({
                 status:"success",
                 message: "Your password is updated"
