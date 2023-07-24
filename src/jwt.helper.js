@@ -9,7 +9,7 @@ const createAccessJWT=async(email,_id)=>{
     try {
         const accessJWT= await jwt.sign({email}, 
             process.env.JWT_ACCESS_SECRET,
-            {expiresIn:'30m'}
+            {expiresIn:'6h'}
             );
             await setJWT(accessJWT,_id);
             return Promise.resolve(accessJWT);
@@ -33,7 +33,7 @@ const createRefreshJWT=async (payLoad,_id)=>{
     
 }
 
-const verifyAccessJWT=userJWt=>{
+const verifyAccessJWT=(userJWt)=>{
     try{
         return Promise.resolve(
             jwt.verify(userJWt,process.env.JWT_ACCESS_SECRET)

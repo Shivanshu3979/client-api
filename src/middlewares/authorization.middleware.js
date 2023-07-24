@@ -3,10 +3,7 @@ const {getJWT} = require("../redis.helper")
 
 const userAuthorization=async(req,res,next)=>{
     const {authorization} = req.headers;
-    console.log(authorization);
-
     const decoded=await verifyAccessJWT(authorization);
-    console.log(decoded);
     if(decoded.email){
         const userId=await getJWT(authorization);
         if(!userId){

@@ -163,7 +163,7 @@ router.delete("/logout", userAuthorization, async(req,res)=>{
         });
     }
     res.json({
-        status:"success",
+        status:"error",
         message:"Unable to logout user."
     })
 })
