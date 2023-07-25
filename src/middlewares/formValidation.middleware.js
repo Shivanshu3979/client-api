@@ -6,9 +6,9 @@ const email=joi.string().email({
 })
 
 const pin=joi.string().min(6).max(6);
-
 const newPassword=joi.string().alphanum().min(3).max(30).required();
-
+const shortString=joi.string().min(2).max(50).required();
+const longString=joi.string().min(2).max(1000).required();
 
 const resetPassValidation=(req,res,next)=>{
     const schema=joi.object({email})
@@ -33,7 +33,44 @@ const updatePassValidation=(req,res,next)=>{
     next();
 }
 
+const createNewTicketValidation=(req,res,next)=>{
+    const schema=joi.object({
+        subject:shortString,
+        sender:shortString,
+        message:longString
+    })
+
+    const value=schema.validate(req.body);
+    if(value.error){
+        console.log(error);
+        return res.json({
+            status:"error",
+            message:value.error.message
+        });
+    }
+    next();
+}
+
+const replyTicketMessageValidation=(req,res,next)=>{
+    const schema=joi.object({
+        sender:shortString,
+        message:longString
+    })
+
+    const value=schema.validate(req.body);
+    if(value.error){
+        console.log(error);
+        return res.json({
+            status:"error",
+            message:value.error.message
+        });
+    }
+    next();
+}
+
 module.exports={
     resetPassValidation,
-    updatePassValidation
+    updatePassValidation,
+    createNewTicketValidation,
+    replyTicketMessageValidation,
 }
