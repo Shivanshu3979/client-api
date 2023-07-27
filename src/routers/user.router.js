@@ -87,7 +87,12 @@ router.post("/login",async(req,res)=>{
 router.get("/", userAuthorization,async(req,res)=>{
     const _id=req.userID;
     const profile=await getUserById(_id);
-    res.json({profile});
+    const {id,name,email}=profile;
+    res.json({user:{
+        id,
+        name,
+        email,
+    }});
 })
 
 router.post('/reset-password', resetPassValidation, async(req,res)=>{
