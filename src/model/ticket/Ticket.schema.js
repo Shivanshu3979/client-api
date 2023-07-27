@@ -5,6 +5,18 @@ const TicketSchema = new Schema({
     clientId:{
         type:Schema.Types.ObjectId
     },
+    email:{
+        type: String,
+        maxlength: 100,
+        required: true,
+        default:""
+    },
+    name:{
+        type: String,
+        maxlength: 100,
+        required: true,
+        default:""
+    },
     subject: {
         type: String,
         maxlength: 100,
@@ -16,6 +28,12 @@ const TicketSchema = new Schema({
         required:true,
         default:Date.now(),
     },
+    updatedAt:{
+        type:Date,
+        require:true,
+        default:Date.now(),
+    }
+    ,
     status: {
         type: String,
         maxlength: 30,

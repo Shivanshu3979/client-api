@@ -1,7 +1,7 @@
 const express=require("express");
 const { insertTicket, getTickets, getTicketsById, updateClientReply, updateStatusClose, deleteTicket } = require("../model/ticket/Ticket.model");
 const { userAuthorization } = require("../middlewares/authorization.middleware");
-const { createNewTicketValidation } = require("../middlewares/formValidation.middleware");
+const { createNewTicketValidation, replyTicketMessageValidation } = require("../middlewares/formValidation.middleware");
 const router=express.Router();
 
 router.all('/', (req,res,next)=>{
@@ -14,11 +14,13 @@ router.all('/', (req,res,next)=>{
 router.post("/",createNewTicketValidation,userAuthorization, async(req,res)=>{
 
     try {
-        const {subject, sender, message}=req.body
+        const {subject, email, name, sender, message}=req.body
         const userId=req.userID
     const ticketObj = {
         clientId: userId,
         subject,
+        email,
+        name,
         conversations:[
             {
                 sender,
@@ -86,7 +88,7 @@ router.get("/:ticketId",userAuthorization, async(req,res)=>{
 })
 
 //update reply message from client
-router.put("/:ticketId",userAuthorization, async(req,res)=>{
+router.put("/:ticketId",replyTicketMessageValidation,userAuthorization, async(req,res)=>{
     try {
         const {message, sender} = req.body;
         const {ticketId } = req.params;

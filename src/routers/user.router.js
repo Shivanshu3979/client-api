@@ -53,7 +53,11 @@ const passMatch=(p,hash)=>{
 }
 //user signin
 router.post("/login",async(req,res)=>{
-    const {username,password}=req.body
+    const {password}=req.body
+    var {username}=req.body;
+    if(!username){
+        username=req.body.email;
+    }
     if(!username || !password){
         res.json({status:"error", message:"Invalid Form Data"});
     }

@@ -36,16 +36,18 @@ const updatePassValidation=(req,res,next)=>{
 const createNewTicketValidation=(req,res,next)=>{
     const schema=joi.object({
         subject:shortString,
+        email:email,
+        name:shortString,
         sender:shortString,
         message:longString
     })
-
     const value=schema.validate(req.body);
     if(value.error){
-        console.log(error);
+        console.log(value);
         return res.json({
             status:"error",
-            message:value.error.message
+            message:value.error.message,
+            response:req.body,
         });
     }
     next();
@@ -59,7 +61,6 @@ const replyTicketMessageValidation=(req,res,next)=>{
 
     const value=schema.validate(req.body);
     if(value.error){
-        console.log(error);
         return res.json({
             status:"error",
             message:value.error.message

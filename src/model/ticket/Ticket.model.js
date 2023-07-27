@@ -44,6 +44,7 @@ const updateClientReply = (_id,message,sender) => {
           { "_id": `${_id}` },
           {
             status:"pending",
+            updatedAt:Date.now(),
             $push:{
               conversations:{message,sender},
             }
@@ -63,6 +64,7 @@ const updateStatusClose = (ticketId,clientId) => {
           { "_id": `${ticketId}`,clientId, },
           {
             status:"Closed",
+            updatedAt:Date.now(),
           },
           {new:true},)
         .then((data) => {
