@@ -94,7 +94,7 @@ router.put("/:ticketId",replyTicketMessageValidation,userAuthorization, async(re
         const {ticketId } = req.params;
 
         const result = await updateClientReply(ticketId,message,sender);
-
+        console.log(result);
         if(result._id){
             return res.json({
                 status:"success",
