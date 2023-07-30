@@ -98,6 +98,7 @@ router.put("/:ticketId",replyTicketMessageValidation,userAuthorization, async(re
         if(result._id){
             return res.json({
                 status:"success",
+                message:"Message updated successfully",
                 result,
             });
         }
@@ -121,7 +122,7 @@ router.patch("/close-ticket/:ticketId",userAuthorization, async(req,res)=>{
         if(result._id){
             return res.json({
                 status:"success",
-                message:"Message added to conversation"
+                message:"Ticket Closed Succesfully"
             });
         }
         
