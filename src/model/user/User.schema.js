@@ -10,11 +10,27 @@ const UserSchema = new Schema({
     email: {
         type: String,
         maxlength: 100,
-        required: true
+        required: true,
     },
     username: {
         type: String,
         maxlength: 50,
+        required: true,
+        unique:true,
+    },
+    company: {
+        type: String,
+        maxlength: 50,
+        required: true
+    },
+    phone: {
+        type: String,
+        maxlength: 12,
+        required: true
+    },
+    address: {
+        type: String,
+        maxlength: 500,
         required: true
     },
     password: {
@@ -40,7 +56,6 @@ const UserSchema = new Schema({
         }
     }
 });
-
 module.exports = {
     UserSchema: mongoose.model('users_table', UserSchema)
 };

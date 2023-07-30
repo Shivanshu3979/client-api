@@ -16,6 +16,7 @@ const insertTicket = (ticketObj) =>{
 };
 
 const getTickets = (clientId) => {
+  console.log(clientId);
     return new Promise((resolve, reject) => {
       TicketSchema
         .find({ "clientId": `${clientId}` })

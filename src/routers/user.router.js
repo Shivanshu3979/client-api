@@ -21,7 +21,7 @@ const hashPassword=(pwd)=>{
     return bcrypt.hashSync(pwd, salt);
 }
 router.post('/',async(req,res)=>{
-    const {name,email,username,password,role}=req.body;
+    const {name,email,username,password,role,phone,company,address}=req.body;
 
     try{
         console.log(password);
@@ -31,11 +31,18 @@ router.post('/',async(req,res)=>{
             email,
             username,
             password:hashedPass,
-            role
+            role,
+            company,
+            phone,
+            address,
+        }
+        const check=await getUserByEmail(email);
+        if(check && check._id){
+            return res.json({status:"error",message:"Duplicate Email Address '"+email+"'", check});
         }
         const result=await insertUser(userObj);
         console.log(result);
-        res.json({message:"New user created", result});
+        res.json({status:"success",message:"New user created", result});
     }catch(error){
         console.log(error);
         res.json({status:"error", message:error.message})
@@ -52,22 +59,23 @@ const passMatch=(p,hash)=>{
     })
 }
 //user signin
+const isEmail=(email)=>{
+    return email.includes("@");
+}
 router.post("/login",async(req,res)=>{
     const {password}=req.body
-    var {username}=req.body;
-    if(!username){
-        username=req.body.email;
-    }
-    if(!username || !password){
+    const {email}=req.body;
+    if(!email || !password){
         res.json({status:"error", message:"Invalid Form Data"});
     }
-    const user=await getUserByEmail("",username);
+    const user=isEmail(email)?await getUserByEmail(email,""):await getUserByEmail("",username);
     const dat_pass=user && user._id ? user.password:null;
     if(!dat_pass){
         return res.json({status:"error", message:"Invalid Username or password"});
     }
 
     const result=await passMatch(password,dat_pass);
+    console.log(password);
     if(!result){
         return res.json({status:"error", message:"Invalid Username or password"});
     }
@@ -101,7 +109,7 @@ router.post('/reset-password', resetPassValidation, async(req,res)=>{
         return res.json({message:"Invalid email", access:"forbidden"})
     }
     const user=await getUserByEmail(email,"");
-    console.log(user.email)
+    //console.log(user.email)
     if(user && user._id && user.email){
         //6 digit pin 
         const setPin=await setPasswordResetPin(user.email)
@@ -109,7 +117,7 @@ router.post('/reset-password', resetPassValidation, async(req,res)=>{
 
         if(result.messageId){
             return res.json({
-                status:"Success",
+                status:"success",
                 message:
                 "If the email is present in our database, the password reset pin will be sent soon"
             })
@@ -120,7 +128,7 @@ router.post('/reset-password', resetPassValidation, async(req,res)=>{
             message: "Unable to send Email"
         });
     }
-    res.json({status:"error", message:"if the email is associated with your username the password reset pin will sent shortly"});
+    res.json({status:"error", message:"email not found"});
 })
 
 router.patch('/reset-password', updatePassValidation,async(req,res)=>{

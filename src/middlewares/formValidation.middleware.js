@@ -6,7 +6,7 @@ const email=joi.string().email({
 })
 
 const pin=joi.string().min(6).max(6);
-const newPassword=joi.string().alphanum().min(3).max(30).required();
+const newPassword=joi.string().min(3).max(30).required();
 const shortString=joi.string().min(2).max(50).required();
 const longString=joi.string().min(2).max(1000).required();
 
