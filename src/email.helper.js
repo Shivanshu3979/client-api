@@ -24,6 +24,7 @@ const send=async(info)=>{
   })
   
 }
+
 const emailProcessor=(clientEmail,username,pin,type)=>{
   switch(type){
     case "request-new-pass":

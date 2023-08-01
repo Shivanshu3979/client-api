@@ -49,7 +49,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0y
 ### ticket ###
 POST http://localhost:3001/v1/ticket
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0yIiwiaWF0IjoxNjkwMzMyMjE5LCJleHAiOjE2OTA0MTg2MTl9.ILIUgcUKFa1vtXNHEUuJd4Kwkp6U20pU_4hkrQJwrlw
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwNzQ3MTA2LCJleHAiOjE2OTMzMzkxMDZ9.IaRVPkPZTftgjULAtm6dsNAHfk9iC5F53nuiQORITNQ
 
 {
     "subject":"client issue",
@@ -92,6 +92,64 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QtdXNlci0y
 
 
 
+
+
+
+######### tickets section ##########
+### ticket ###
+POST http://localhost:3001/v1/hiring
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwNzQ3MTA2LCJleHAiOjE2OTMzMzkxMDZ9.IaRVPkPZTftgjULAtm6dsNAHfk9iC5F53nuiQORITNQ
+
+{
+    "name":"Shivanshu",
+    "roleApplied":"IT Intern",
+    "email":"shivanshu.yadav04@gmail.com",
+    "education":"MBA",
+    "summary":"Contact from not working. please fix it as soon as possible",
+    "skill1":"Excel",
+    "skill2":"Java",
+    "skill3":"Analytical skills",
+    "languages":"English, Hindi",
+    "linkedin":"https://www.linkedin.com/in/shivanshuyadav3979/",
+    "others":"English, Hindi",
+    "stage1":"CV Shorlisting",
+    "stage2":"Technical Round",
+    "stage3":"Hr Round",
+    "status":"Rejected"
+}
+
+###get authorisation###
+GET http://localhost:3001/v1/hiring
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwODk0NDk1LCJleHAiOjE2OTM0ODY0OTV9.ud8wBWmzveX8c7gG9Rk06bX7ZlWhbEuxL-0FiH5QVGA
+
+###get single ticket authorisation###
+
+GET http://localhost:3001/v1/hiring/64c91f5d08faf956f38bd36b
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwODk0NDk1LCJleHAiOjE2OTM0ODY0OTV9.ud8wBWmzveX8c7gG9Rk06bX7ZlWhbEuxL-0FiH5QVGA
+
+###put message in conversation###
+PUT http://localhost:3001/v1/hiring/64bfec530652335b4dc68ea6
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwODk0NDk1LCJleHAiOjE2OTM0ODY0OTV9.ud8wBWmzveX8c7gG9Rk06bX7ZlWhbEuxL-0FiH5QVGA
+
+{
+    "sender":"Prem",
+    "message":"Contact from not working. please fix it as soon as possible"
+}
+
+###close ticket patch work###
+PATCH  http://localhost:3001/v1/hiring/close-application/64c91f5d08faf956f38bd36b
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwODk0NDk1LCJleHAiOjE2OTM0ODY0OTV9.ud8wBWmzveX8c7gG9Rk06bX7ZlWhbEuxL-0FiH5QVGA
+
+###delete ticket patch work###
+DELETE  http://localhost:3001/v1/hiring/64c91f5d08faf956f38bd36b
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwODk0NDk1LCJleHAiOjE2OTM0ODY0OTV9.ud8wBWmzveX8c7gG9Rk06bX7ZlWhbEuxL-0FiH5QVGA
+
+
+###send offer letter###
+POST  http://localhost:3001/v1/hiring/sendletter/64c91f5d08faf956f38bd36b
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImUyQGUuY29tIiwiaWF0IjoxNjkwODk0NDk1LCJleHAiOjE2OTM0ODY0OTV9.ud8wBWmzveX8c7gG9Rk06bX7ZlWhbEuxL-0FiH5QVGA
 
 
 

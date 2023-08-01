@@ -68,7 +68,7 @@ router.post("/login",async(req,res)=>{
     if(!email || !password){
         res.json({status:"error", message:"Invalid Form Data"});
     }
-    const user=isEmail(email)?await getUserByEmail(email,""):await getUserByEmail("",username);
+    const user=isEmail(email)?await getUserByEmail(email,""):await getUserByEmail("",email);
     const dat_pass=user && user._id ? user.password:null;
     if(!dat_pass){
         return res.json({status:"error", message:"Invalid Username or password"});

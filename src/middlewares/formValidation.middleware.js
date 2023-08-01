@@ -5,9 +5,13 @@ const email=joi.string().email({
     tlds:{allow:["com","net","in"]}
 })
 
+const link=joi.string().uri();
+const optional=joi.string().min(0);
+
 const pin=joi.string().min(6).max(6);
+const exp=joi.string().min(1).max(2);
 const newPassword=joi.string().min(3).max(30).required();
-const shortString=joi.string().min(2).max(50).required();
+const shortString=joi.string().min(2).max(100).required();
 const longString=joi.string().min(2).max(1000).required();
 
 const resetPassValidation=(req,res,next)=>{
@@ -52,6 +56,36 @@ const createNewTicketValidation=(req,res,next)=>{
     }
     next();
 }
+const createNewHiringValidation=(req,res,next)=>{
+    const schema=joi.object({
+        roleApplied:shortString,
+        email:email,
+        name:shortString,
+        education:longString,
+        skill1:shortString,
+        skill2:shortString,
+        skill3:shortString,
+        languages:shortString,
+        workexp:exp,
+        linkedin:link,
+        summary:longString,
+        others:optional,
+        stage1:optional,
+        stage2:optional,
+        stage3:optional,
+        status:optional
+    })
+    const value=schema.validate(req.body);
+    if(value.error){
+        console.log(value);
+        return res.json({
+            status:"error",
+            message:value.error.message,
+            response:req.body,
+        });
+    }
+    next();
+}
 
 const replyTicketMessageValidation=(req,res,next)=>{
     const schema=joi.object({
@@ -74,4 +108,5 @@ module.exports={
     updatePassValidation,
     createNewTicketValidation,
     replyTicketMessageValidation,
+    createNewHiringValidation,
 }
