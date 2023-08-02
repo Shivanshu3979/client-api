@@ -36,7 +36,7 @@ All the user API router follows `/v1/ticket/`
 | 6   | `/v1/ticket/{id}`              | DELETE | Done     | Yes        | Delete a ticket                         |
 
 
-All the user API router follows `/v1//`
+All the user API router follows `/v1/hiring/`
 
 | #   | Routers                        | Verbs | Progress | Is Private | Description                             |
 | --- | ------------------------------ | ----- | -------- | ---------- | --------------------------------------- |
